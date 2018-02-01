@@ -18,7 +18,7 @@ const storeSchema = new mongoose.Schema({
 })
 // I need 'this' that's why I'm not using an arrow function
 // 'this' will be equals to the Store that we are trying to save
-storeSchema.pre('save', function() {
+storeSchema.pre('save', function(next) {
   if (this.isModified('name')) {
    this.slug = slug(this.name)
   }
