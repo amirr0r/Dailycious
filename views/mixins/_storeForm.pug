@@ -3,10 +3,18 @@ mixin storeForm(store = {})
     label(for="name") Name
     input(type="text" name="name" value=store.name)
     label(for="description") Description
-    input(type="text" name="description")
+    textarea(name="description")= store.description
+    //- address, longitude and latitude
+    label(for="address") Address
+    input(type="text" id="address" name="location[address]" value=(store.location && store.location.address))
+    label(for="lng") Address Longitude
+    input(type="text" id="lng" name="location[coordinates][0]" value=(store.location && store.location.coordinates[0]) required)
+    label(for="lat") Address Latitude
+    input(type="text" id="lat" name="location[coordinates][1]" value=(store.location && store.location.coordinates[1]) required)
+
     - const choices = ['Wifi', 'Open Late', 'Family Friendly', 'Vegatarian', 'Licensed']
     - const tags = store.tags || []
-    - console.log('TAGS :', tags, 'STORE :', store)
+    - console.log('\n\nSTORE', store)
     br
     br
     ul.tags
