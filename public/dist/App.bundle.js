@@ -113,6 +113,50 @@ __webpack_require__(1);
 
 var _bling = __webpack_require__(0);
 
+var _autocomplete = __webpack_require__(9);
+
+var _autocomplete2 = _interopRequireDefault(_autocomplete);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var address = (0, _bling.$)('#address');
+var lng = (0, _bling.$)('#lng');
+var lat = (0, _bling.$)('#lat');
+(0, _autocomplete2.default)(address, lat, lng);
+
+/***/ }),
+/* 3 */,
+/* 4 */,
+/* 5 */,
+/* 6 */,
+/* 7 */,
+/* 8 */,
+/* 9 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var autocomplete = function autocomplete(input, latInput, lngInput) {
+  if (input) {
+    var dropdown = new google.maps.places.Autocomplete(input);
+    dropdown.addListener('place_changed', function () {
+      var place = dropdown.getPlace();
+      latInput.value = place.geometry.location.lat();
+      lngInput.value = place.geometry.location.lng();
+    });
+    // when the user hits on enter, we don't want to submit the form so ..
+    input.on('keydown', function (e) {
+      return e.keyCode === 13 ? e.preventDefault() : '';
+    });
+  }
+};
+
+exports.default = autocomplete;
+
 /***/ })
 /******/ ]);
 //# sourceMappingURL=App.bundle.js.map
