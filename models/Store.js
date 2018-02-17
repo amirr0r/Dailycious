@@ -32,7 +32,8 @@ const storeSchema = new mongoose.Schema({
       type: String,
       required: 'You must supply an address!'
     }
-  }
+  },
+  photo: String
 })
 // I need 'this' that's why I'm not using an arrow function
 // 'this' will be equals to the Store that we are trying to save
