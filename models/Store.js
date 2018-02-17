@@ -35,7 +35,7 @@ const storeSchema = new mongoose.Schema({
   },
   photo: String
 })
-// I need 'this' that's why I'm not using an arrow function
+
 // 'this' will be equals to the Store that we are trying to save
 storeSchema.pre('save', async function(next) {
   if (this.isModified('name')) {
@@ -49,5 +49,14 @@ storeSchema.pre('save', async function(next) {
   }
   next()
 })
+
+// 'statics' allows us to add a method to the schema
+storeSchema.statics.getTagsList() = function() {
+  return this.aggregate([
+    { $unwind: '$tags' },
+    { $group: { _id: '$tags', count: { $sum: 1 } } },
+    { $sort: { count: -1 } }
+  ])
+}
 
 module.exports = mongoose.model('Store', storeSchema)
