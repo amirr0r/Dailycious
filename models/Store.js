@@ -37,9 +37,15 @@ const storeSchema = new mongoose.Schema({
 })
 // I need 'this' that's why I'm not using an arrow function
 // 'this' will be equals to the Store that we are trying to save
-storeSchema.pre('save', function(next) {
+storeSchema.pre('save', async function(next) {
   if (this.isModified('name')) {
    this.slug = slug(this.name)
+   // find others stores that have a similar name
+   const slugRegex = new RegExp(`^(${this.slug})((-[0-9]*$))$`, 'i')
+   const similarStores = await this.constructor.find({ slug: slugRegex })
+   if (similarStores.length) {
+    this.slug = `${this.slug}-${similarStores.length + 1}`
+   }
   }
   next()
 })
