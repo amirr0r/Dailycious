@@ -22,7 +22,7 @@ exports.upload = multer(multerOptions).single('photo')
 exports.resize = async (req, res, next) => {
   if (req.file) {
     const extension = req.file.mimetype.split('/')[1]
-    req.body.photo = `${uuid.v4()}`
+    req.body.photo = `${uuid.v4()}.${extension}`
 
     const photo = await jimp.read(req.file.buffer)
     await photo.resize(800, jimp.AUTO)
@@ -30,6 +30,7 @@ exports.resize = async (req, res, next) => {
   }
   next()
 }
+
 // exports.createStore = (req, res) => {
 //   const store = new Store(req.body)
 //   store
@@ -59,29 +60,28 @@ exports.editStore = async (req, res) => {
 }
 
 exports.updateStore = async (req, res) => {
-  // find an update the store
+  // find and update the store
   const store = await Store.findOneAndUpdate({ _id: req.params.id }, req.body, {
     new: true, // return the new store instead of the old one
     runValidators: true, // forced our models to run its required validators
   }).exec()
   //Redirect them to the store and tell them it worked
   req.flash('success', `Successfully updated <strong>${store.name}</strong>.
-    <a href="/stores/${store.slug}">View store →</a>`)
+    <a href="/store/${store.slug}">View store →</a>`)
   res.redirect(`/stores/${store._id}/edit`)
 }
 
 exports.getStoreBySlug = async (req, res, next) => {
   const store = await Store.findOne({ slug: req.params.slug })
-  if (store) {
-    res.render('store', { store, title: store.name })
-  }
-  next()
+  
+  if (!store) return next();
+  res.render('store', { store, title: store.name });
 }
 
 exports.getStoresByTag = async (req, res) => {
   const category = req.params.tag
   const tagsPromise = Store.getTagsList()
-  const storesPromises = Store.find({ tags: category})
+  const storesPromise = Store.find({ tags: category })
 
   const [tags, stores] = await Promise.all([tagsPromise, storesPromise])
   

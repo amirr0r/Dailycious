@@ -51,7 +51,7 @@ storeSchema.pre('save', async function(next) {
 })
 
 // 'statics' allows us to add a method to the schema
-storeSchema.statics.getTagsList() = function() {
+storeSchema.statics.getTagsList = function() {
   return this.aggregate([
     { $unwind: '$tags' },
     { $group: { _id: '$tags', count: { $sum: 1 } } },
