@@ -535,7 +535,7 @@ label {
     left: 0; }
   .search__input {
     font-size: 30px;
-    background: lavender;
+    background: aliceblue;
     color: black;
     outline: 0;
     border: 0; }
@@ -607,7 +607,9 @@ label {
   padding: 0;
   -ms-flex-pack: justify;
       justify-content: space-between;
-    background: cornflowerblue; }
+    background: cornflowerblue; 
+    border: 3px solid cornflowerblue;
+  }
   .nav__section {
     display: -ms-flexbox;
     display: flex; }

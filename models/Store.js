@@ -1,9 +1,10 @@
 const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 const slug = require('slugs')
 
 mongoose.Promise = global.Promise
 
-const storeSchema = new mongoose.Schema({
+const storeSchema = new Schema({
 	name: {
     type: String,
     trim: true,
