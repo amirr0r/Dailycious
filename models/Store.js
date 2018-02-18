@@ -34,7 +34,12 @@ const storeSchema = new Schema({
       required: 'You must supply an address!'
     }
   },
-  photo: String
+  photo: String, 
+  author: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'User',
+    required: 'You must supply an author!'
+  }
 })
 
 // 'this' will be equals to the Store that we are trying to save
