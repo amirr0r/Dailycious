@@ -56,6 +56,12 @@ storeSchema.pre('save', async function(next) {
   next()
 })
 
+// Indexes help us to improve results from a query thanks to MongoDB
+storeSchema.index({
+  name: 'text',
+  description: 'text'
+})
+
 // 'statics' allows us to add a method to the schema
 storeSchema.statics.getTagsList = function() {
   return this.aggregate([
