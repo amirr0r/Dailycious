@@ -10,3 +10,5 @@ public/dist/App.bundle.js
 public/dist/App.bundle.js.map
 public/dist/style.css
 variables.env
+public/uploads/
+public/images/
