@@ -109,3 +109,29 @@ exports.searchStores = async (req, res) => {
   .limit(5)
   res.json(stores)
 }
+
+exports.mapStores = async (req, res) => {
+  const lng = req.query.lng
+  const lat = req.query.lat
+  const coordinates = [lng, lat].map(parseFloat)
+  const q = {
+    location: {
+      $near: {
+        $geometry: {
+          type: 'Point',
+          coordinates
+        },
+        $maxDistance: 10000 // 10kms
+      }
+    }
+  }
+
+  const stores = await Store.find(q)
+    .select('slug name description location photo')
+    .limit(10)
+  res.json(stores)
+}
+
+exports.mapPage = (req, res) => {
+  res.render('map', { title: 'Map' })
+}

@@ -41,6 +41,15 @@ const storeSchema = new Schema({
     required: 'You must supply an author!'
   }
 })
+// Indexes help us to improve results from a query thanks to MongoDB
+storeSchema.index({
+  name: 'text',
+  description: 'text'
+})
+
+storeSchema.index({ 
+  location: '2dsphere' 
+})
 
 // 'this' will be equals to the Store that we are trying to save
 storeSchema.pre('save', async function(next) {
@@ -54,12 +63,6 @@ storeSchema.pre('save', async function(next) {
    }
   }
   next()
-})
-
-// Indexes help us to improve results from a query thanks to MongoDB
-storeSchema.index({
-  name: 'text',
-  description: 'text'
 })
 
 // 'statics' allows us to add a method to the schema

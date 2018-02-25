@@ -39,7 +39,6 @@ router.post('/register',
 	authController.login,
 )
 
-
 router.get('/account', authController.isLoggedIn, userController.account)
 router.post('/account', catchErrors(userController.updateAccount))
 router.post('/account/forgot', catchErrors(authController.forgot))
@@ -49,6 +48,10 @@ router.post('/account/reset/:token',
   catchErrors(authController.update)
 )
 
+router.get('/map', storeController.mapPage)
+
 router.get('/api/search', catchErrors(storeController.searchStores))
+
+router.get('/api/stores/near', catchErrors(storeController.mapStores))
 
 module.exports = router
