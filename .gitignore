@@ -1,0 +1,14 @@
+.DS_Store
+node_modules
+./node_modules
+/node_modules
+node_modules/*
+./node_modules/*
+/node_modules/*
+package-lock.json
+public/dist/App.bundle.js
+public/dist/App.bundle.js.map
+public/dist/style.css
+variables.env
+public/uploads/
+public/images/
